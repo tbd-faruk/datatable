@@ -48,31 +48,33 @@
             <fieldset>
                 <legend>Validating Test</legend>
                 <div class="form-group">
-                    <label for="firstname">Firstname</label>
+                    <label for="firstname">Firstname <span style="color:red">*</span></label>
                     <input class="form-control" id="firstname" name="firstname" type="text">
                 </div>
                 </p>
                 <div class="form-group">
-                    <label for="lastname">Lastname</label>
-                    <input class="form-control" id="lastname" name="lastname" type="text">
+                    <label for="lastname">Lastname <span style="color:red">*</span></label>
+                    <input class="form-control" id="lastname" name="lastname" type="text" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">Username <span style="color:red">*</span></label>
                     <input class="form-control" id="username" autocomplete="off" name="username" type="text">
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="email">Email <span style="color:red">*</span></label>
+                    <input class="form-control" id="email" name="email" type="email" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password <span style="color:red">*</span></label>
                     <input class="form-control" id="password" name="password" autocomplete="off" type="password">
                 </div>
                 <div class="form-group">
-                    <label for="confirm_password">Confirm password</label>
+                    <label for="confirm_password">Confirm password <span style="color:red">*</span></label>
                     <input class="form-control" id="confirm_password" name="confirm_password" type="password">
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input class="form-control" id="email" name="email" type="email">
-                </div>
+
                 <fieldset >
+                    <label for="list">Check <span style="color:red">*</span></label>
                     <div class="form-group">
                         <div><input name="list" id="list0" type="checkbox"  value="newsletter0" >zero</div>
                         <div><input name="list" id="list1" type="checkbox"  value="newsletter1" >one</div>
@@ -80,6 +82,7 @@
                     <div
                 </fieldset>
                 <fieldset >
+                    <label for="list">Agree <span style="color:red">*</span></label>
                     <div class="form-group">
                         <input type="radio" name="radioname" /> <label>Yes</label>
                         <input type="radio" name="radioname" /> <label>No</label>
@@ -119,7 +122,7 @@
                 firstname: {
                     required: true,
                     minlength: 5,
-                    // alphanumeric: true
+                    alphanumeric: true
                 },
                 list: {
                     required: true,
@@ -145,19 +148,16 @@
                 email: {
                     required: true,
                     email: true,
+                    remote:"check-email.php",
                     // remote:{
                     //     url: "check-email.php",
                     //     type: "post",
-                    //     data: {
-                    //         emails: function(){
-                    //             return $("#email").val();
-                    //         }
-                    //     }
+                    //     // data: {
+                    //     //     "email": function(){
+                    //     //         return $("#email").val();
+                    //     //     }
+                    //     // }
                     // }
-                },
-                topic: {
-                    required: "#newsletter:checked",
-                    minlength: 2
                 },
                 agree: "required"
             },
@@ -185,19 +185,19 @@
                     email: "Please enter a valid email address",
                     remote: "This email already exists",
                 },
+                list: {
+                    required: "Please checked one",
+                    minlength: "Please checked one"
+                },
                 agree: "Please accept our policy",
                 topic: "Please select at least 2 topics"
-            }
-        });
+            },
 
-        // // propose username by combining first- and lastname
-        // $("#username").focus(function() {
-        //     var firstname = $("#firstname").val();
-        //     var lastname = $("#lastname").val();
-        //     if (firstname && lastname && !this.value) {
-        //         this.value = firstname + "." + lastname;
-        //     }
-        // });
+        });
+        jQuery.validator.addMethod("alphanumeric", function (value, element) {
+            return this.optional(element) || /^\w+$/i.test(value);
+        }, "Letters, numbers, and underscores only please");
+
 
 
     });

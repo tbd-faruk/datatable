@@ -3,8 +3,7 @@
 $output= array();
 $sql = "SELECT * FROM countries";
 
-$totalQuery = mysqli_query($con,$sql);
-$total_all_rows = mysqli_num_rows($totalQuery);
+
 
 $columns = array(
 	0 => 'id',
@@ -60,6 +59,11 @@ else
 {
 	$sql .= " ORDER BY id desc";
 }
+
+$totalQuery = mysqli_query($con,$sql);
+$total_all_rows = mysqli_num_rows($totalQuery);
+
+
 	$start = $_POST['start'];
 	$length = $_POST['length'];
 	$sql .= " LIMIT  ".$start.", ".$length;
