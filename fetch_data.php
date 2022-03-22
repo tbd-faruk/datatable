@@ -63,10 +63,12 @@ else
 $totalQuery = mysqli_query($con,$sql);
 $total_all_rows = mysqli_num_rows($totalQuery);
 
+    if($_POST['length'] != -1){
+        $start = $_POST['start'];
+        $length = $_POST['length'];
+        $sql .= " LIMIT  ".$start.", ".$length;
+    }
 
-	$start = $_POST['start'];
-	$length = $_POST['length'];
-	$sql .= " LIMIT  ".$start.", ".$length;
 
 $query = mysqli_query($con,$sql);
 $count_rows = mysqli_num_rows($query);

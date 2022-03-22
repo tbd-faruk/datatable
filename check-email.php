@@ -1,4 +1,10 @@
-<?php
+<?php include('connection.php');
+
+$output= array();
+$sql = "SELECT * FROM countries WHERE name = '".$_POST['username']."'";
+$query = mysqli_query($con,$sql);
+$count_rows = mysqli_num_rows($query);
+
 //        if($_REQUEST['email'] == "farukhaidar3@gmail.com"){
 //        if($_POST['email'] != "farukhaidar3@gmail.com"){
 //            echo "true";
@@ -7,19 +13,13 @@
 //        }
 
 
-if (!empty($_POST['email']))
+if ($count_rows < 0)
 {
-    if($_POST['email'] != "farukhaidar3@gmail.com")
-    {
-        echo "true";  //good to register
-    }
-    else
-    {
-        echo "false"; //already registered
-    }
+  echo "false";
 }
 else
 {
-    echo "false"; //invalid post var
+    echo "true";
 }
-?>
+
+

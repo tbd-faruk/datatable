@@ -44,7 +44,7 @@
 <div class="row">
     <div class="col-md-3"></div>
     <div class="card col-md-6">
-        <form class="cmxform" id="signupForm" method="get" action="" novalidate="novalidate">
+        <form class="cmxform" id="signupForm" method="get" action="" novalidate="novalidate" autocomplete="off">
             <fieldset>
                 <legend>Validating Test</legend>
                 <div class="form-group">
@@ -64,10 +64,10 @@
                     <label for="email">Email <span style="color:red">*</span></label>
                     <input class="form-control" id="email" name="email" type="email" autocomplete="off">
                 </div>
-                <div class="form-group">
-                    <label for="password">Password <span style="color:red">*</span></label>
-                    <input class="form-control" id="password" name="password" autocomplete="off" type="password">
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="password">Password <span style="color:red">*</span></label>-->
+<!--                    <input class="form-control" id="password" name="password" autocomplete="off" type="password">-->
+<!--                </div>-->
                 <div class="form-group">
                     <label for="confirm_password">Confirm password <span style="color:red">*</span></label>
                     <input class="form-control" id="confirm_password" name="confirm_password" type="password">
@@ -103,7 +103,11 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>-->
+<script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
@@ -134,7 +138,11 @@
                 lastname: "required",
                 username: {
                     required: true,
-                    rangelength: [2, 10]
+                    rangelength:[2, 10],
+                    remote:{
+                        url: "check-email.php",
+                        type: "POST"
+                        }
                 },
                 password: {
                     required: true,
@@ -147,17 +155,16 @@
                 },
                 email: {
                     required: true,
-                    email: true,
-                    remote:"check-email.php",
-                    // remote:{
-                    //     url: "check-email.php",
-                    //     type: "post",
-                    //     // data: {
-                    //     //     "email": function(){
-                    //     //         return $("#email").val();
-                    //     //     }
-                    //     // }
-                    // }
+                    // remote:"check-email.php",
+                    remote:{
+                        url: "check-email.php",
+                        type: "POST",
+                        data: {
+                            "email": function(){
+                                return $("#email").val();
+                            }
+                        }
+                    }
                 },
                 agree: "required"
             },
@@ -170,7 +177,8 @@
                 lastname: "Please enter your lastname",
                 username: {
                     required: "Please enter a username",
-                    rangelength: "Your username must consist of at least 2 - 10 characters"
+                    rangelength: "Your username must consist of at least 2 - 10 characters",
+                    remote:"username already exists"
                 },
                 password: {
                     required: "Please provide a password",
